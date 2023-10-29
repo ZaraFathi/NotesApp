@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.NotesApp"
+        parent="Theme.Material3.DayNight.NoActionBar">
+    <item name="colorPrimary">@color/colorYellow</item>
+    <item name="colorPrimaryVariant">@color/colorDarkBlue200</item>
+    <item name="colorOnPrimary" >@color/colorDarkBlue700</item>
+    </style>
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NotesApp</string>
+    <string name="recycle_bin">سطل زباله</string>
+    <string name="textview">TextView</string>
+    <string name="title_activity_add_notes">AddNotesActivity</string>
+    <string name="title">عنوان نوشته</string>
+    <string name="detail">توضیحات نوشته</string>
+    <string name="save">ذخیره کردن</string>
+    <string name="cancel">کنسل کردن</string>
+</resources>
