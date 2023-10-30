@@ -22,12 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initRecycler()
-
-
         binding.imgAddNotes.setOnClickListener {
-
             val intent = Intent(this, AddNotesActivity::class.java)
             startActivity(intent)
         }

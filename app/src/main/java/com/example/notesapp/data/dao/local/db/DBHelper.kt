@@ -10,23 +10,27 @@ class DBHelper(
 
     companion object{
 
-        val FALSE_STATE:String = "0"
+
         private const val DB_NAME ="notes.db"
-        private const val DB_VERSION =1
+        private const val DB_VERSION =2
 
         const val NOTES_TABLE ="Notes"
         const val NOTES_ID ="id"
         const val NOTES_TITLE ="title"
         const val NOTES_DETAIL ="detail"
-        const val NOTES_DELLTE_STATE ="delltestate"
+        const val NOTES_DELETE_STATE ="delltestate"
         const val NOTES_DATE ="date"
+
+        const val TRUE_STATE="1"
+        const val FALSE_STATE="0"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
       db?.execSQL("CREATE TABLE IF NOT EXISTS $NOTES_TABLE(" +
               "$NOTES_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
               "$NOTES_DETAIL TEXT," +
-              "$NOTES_DELLTE_STATE VARCHAR(1)," +
+              "$NOTES_TITLE TEXT," +
+              "$NOTES_DELETE_STATE VARCHAR(1)," +
               "$NOTES_DATE VARCHAR(255))")
 
     }

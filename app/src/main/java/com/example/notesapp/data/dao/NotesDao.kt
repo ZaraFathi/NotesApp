@@ -31,7 +31,7 @@ class NotesDao(
         contentValues.clear()
         contentValues.put(DBHelper.NOTES_TITLE, notes.title)
         contentValues.put(DBHelper.NOTES_DETAIL, notes.detail)
-        contentValues.put(DBHelper.NOTES_DELLTE_STATE, notes.deleteState)
+        contentValues.put(DBHelper.NOTES_DELETE_STATE, notes.deleteState)
         contentValues.put(DBHelper.NOTES_DATE, notes.date)
     }
 
@@ -40,8 +40,8 @@ class NotesDao(
         val database=db.readableDatabase
 
         val query="SELECT ${DBHelper.NOTES_ID},${DBHelper.NOTES_TITLE}" +
-                "FROM${DBHelper.NOTES_TABLE}" +
-                "WHERE${DBHelper.NOTES_DELLTE_STATE}=?"
+                " FROM ${DBHelper.NOTES_TABLE}" +
+                " WHERE ${DBHelper.NOTES_DELETE_STATE}=?"
         cursor=database.rawQuery(query, arrayOf(value))
         val data=getDataForRecycler()
         cursor.close()
