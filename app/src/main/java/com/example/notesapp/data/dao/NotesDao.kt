@@ -15,7 +15,6 @@ class NotesDao(
     private val contentValues = ContentValues(
 
     )
-
     fun saveNotes(notes: DBNotesModel): Boolean {
 
         val database = db.writableDatabase
@@ -26,7 +25,24 @@ class NotesDao(
 
 
     }
+    fun editNotes(id:Int,state:String) :Boolean {
+        val database = db.writableDatabase
+        contentValues.clear()
+        contentValues.put(DBHelper.NOTES_DELETE_STATE,state)
+        val result =database.update(
+            DBHelper.NOTES_TABLE,
+            contentValues,
+            "${DBHelper.NOTES_ID}=?",
+            arrayOf(id.toString())
+        )
+        database.close()
 
+        return result > 0
+    }
+    fun editNotes(id:Int,notes: DBNotesModel) :Boolean{
+        return false
+
+    }
     private fun setContentValues(notes: DBNotesModel) {
         contentValues.clear()
         contentValues.put(DBHelper.NOTES_TITLE, notes.title)
@@ -34,7 +50,6 @@ class NotesDao(
         contentValues.put(DBHelper.NOTES_DELETE_STATE, notes.deleteState)
         contentValues.put(DBHelper.NOTES_DATE, notes.date)
     }
-
     fun getNotesForRecycler(value: String): ArrayList<RecyclerNotesModel> {
 
         val database=db.readableDatabase
@@ -48,7 +63,6 @@ class NotesDao(
         database.close()
         return data
     }
-
     private fun getDataForRecycler(): ArrayList<RecyclerNotesModel> {
 
         val data = ArrayList<RecyclerNotesModel>()
@@ -67,9 +81,34 @@ class NotesDao(
         }
         return data
     }
-    fun getIndex(name:String)=cursor.getColumnIndex(name)
-}
+    fun  getNotesById(id:Int) {
 
+        val database =db.writableDatabase
+        val query="SELECT * FROM ${DBHelper.NOTES_TABLE}  WHERE ${DBHelper.NOTES_ID} =?"
+        cursor =database.rawQuery(query, arrayOf(id.toString()))
+        val data =getData()
+        cursor.close()
+        database.close()
+        return data
+    }
+
+    private fun getData(): DBNotesModel {
+        val data =DBNotesModel(0,"","","","",)
+        try{
+            if (cursor.moveToFirst()){
+                data.id=cursor.getInt(getIndex(DBHelper.NOTES_ID))
+                data.title=cursor.getString(getIndex(DBHelper.NOTES_TITLE))
+                data.detail=cursor.getString(getIndex(DBHelper.NOTES_DETAIL))
+                data.deleteState=cursor.getString(getIndex(DBHelper.NOTES_DELETE_STATE))
+                data.date=cursor.getString(getIndex(DBHelper.NOTES_DATE))
+            }
+        } catch (e:Exception){
+            Log.e("ERROR",e.message.toString())
+        }
+        return data
+    }
+        private fun getIndex(name:String)=cursor.getColumnIndex(name)
+}
 
 
 

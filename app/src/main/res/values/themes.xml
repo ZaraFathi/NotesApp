@@ -6,6 +6,9 @@
         <item name="colorPrimaryVariant">@color/colorDarkBlue200</item>
         <item name="colorOnPrimary">@color/colorDarkBlue700</item>
     </style>
+    <style name="CustomAlertDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:background">@color/colorDarkBlue200</item>
+    </style>
 
     <style name="Theme.NotesApp" parent="Base.Theme.NotesApp" />
 </resources>
