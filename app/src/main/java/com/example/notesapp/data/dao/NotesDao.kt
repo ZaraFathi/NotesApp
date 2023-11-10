@@ -39,9 +39,8 @@ class NotesDao(
 
         return result > 0
     }
-    fun editNotes(id:Int,notes: DBNotesModel) :Boolean{
+    fun editNotes(id:Int,notes: DBNotesModel) :Boolean {
         return false
-
     }
     private fun setContentValues(notes: DBNotesModel) {
         contentValues.clear()
@@ -81,7 +80,7 @@ class NotesDao(
         }
         return data
     }
-    fun  getNotesById(id:Int) {
+    fun  getNotesById(id:Int): DBNotesModel {
 
         val database =db.writableDatabase
         val query="SELECT * FROM ${DBHelper.NOTES_TABLE}  WHERE ${DBHelper.NOTES_ID} =?"

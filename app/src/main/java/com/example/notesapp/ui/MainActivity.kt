@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         initRecycler()
         binding.imgAddNotes.setOnClickListener {
             val intent = Intent(this, AddNotesActivity::class.java)
+            intent .putExtra("nowNotes",true)
             startActivity(intent)
         }
     }

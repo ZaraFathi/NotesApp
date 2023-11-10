@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.Editable
 import android.widget.Toast
 import com.example.notesapp.databinding.ActivityAddNotesBinding
 import com.example.notesapp.utils.persiandate
@@ -42,14 +43,31 @@ class AddNotesActivity() : AppCompatActivity(), Parcelable {
         binding = ActivityAddNotesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val type =intent.getBooleanExtra("nowNotes",false)
+        val id =intent.getIntExtra("notesId",0)
+
         val dao = NotesDao(DBHelper(this))
+
+        if(type){
+            binding.txtDate.text=getDate()
+        }else{
+            val notes =dao.getNotesById(id)
+            val edit =Editable.Factory()
+            binding.edtTitleNotes.text  =edit.newEditable(notes.title)
+            binding.edtDetailNotes.text =edit.newEditable(notes.detail)
+            binding.txtDate.text =notes.date
+        }
+
 
         binding.btnSave.setOnClickListener {
             val title = binding.edtTitleNotes.text.toString()
             val detail = binding.edtDetailNotes.text.toString()
             if (title.isNotEmpty()) {
                 val notes=DBNotesModel(0,title,detail, DBHelper.FALSE_STATE,getDate())
-                val result=dao.saveNotes(notes)
+                val result = if (type)
+                    dao.saveNotes(notes)
+                else
+                    dao.editNotes(id,notes)
                 if(result){
                     showText("یاداشت باموقفیت دخیره شد")
                     finish()

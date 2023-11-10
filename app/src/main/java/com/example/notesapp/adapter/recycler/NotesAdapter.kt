@@ -26,9 +26,11 @@ class NotesAdapter(
         NotesViewHolder(
             ListItemNotesBinding.inflate(context.layoutInflater, parent, false)
         )
+
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         holder.setData(allData[position])
     }
+
     override fun getItemCount() = allData.size
     inner class NotesViewHolder(
         private val bindind: ListItemNotesBinding
@@ -37,41 +39,45 @@ class NotesAdapter(
             bindind.txtTitleNotes.text = data.title
 
             bindind.imgDeleteNotes.setOnClickListener {
-             AlertDialog.Builder(ContextThemeWrapper(context,R.style.CustomAlertDialog))
-                 .setTitle("حدف")
-                 .setMessage("ایامیخواید یادداشت به سطل زباله منتقل شود؟")
-                 .setIcon(R.drawable.ic_delete)
-                 .setNegativeButton("بله") {_,_ ->
-                     val result =dao.editNotes(data.id,DBHelper.TRUE_STATE)
-                     if (result){
-                         showText("یادداشت به سطل زباله منتقل شد")
-                         allData.removeAt(adapterPosition)
-                         notifyItemInserted(adapterPosition)
-                     }else
-                         showText("عملیات با مشکل مواجه شد")
-                 }
-                 .setPositiveButton("خیر"){dialog, _ -> dialog.dismiss()  }
-                 .create()
-                 .show()
+                AlertDialog.Builder(ContextThemeWrapper(context, R.style.CustomAlertDialog))
+                    .setTitle("حدف")
+                    .setMessage("ایامیخواید یادداشت به سطل زباله منتقل شود؟")
+                    .setIcon(R.drawable.ic_delete)
+                    .setNegativeButton("خیر") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton("بله" ) { _, _ ->
+                        val result = dao.editNotes(data.id, DBHelper.TRUE_STATE)
+                        if (result) {
+                            showText("یادداشت به سطل زباله منتقل شد")
+                            allData.removeAt(adapterPosition)
+                            notifyItemRemoved(adapterPosition)
+                        } else
+                            showText("عملیات با مشکل مواجه شد")
+                    }
+                    .create()
+                    .show()
             }
-              bindind.root.setOnClickListener {
-               val intent = Intent (context,AddNotesActivity::class.java)
-                intent.putExtra("notesId",data.id)
+            bindind.root.setOnClickListener {
+                val intent = Intent(context, AddNotesActivity::class.java)
+                intent.putExtra("notesId", data.id)
                 context.startActivity(intent)
             }
         }
-}
-      fun changeData (data:ArrayList<RecyclerNotesModel>){
-          if(data.size>allData.size){
-              allData=data
-              notifyItemInserted(allData.size)
-          }
-      }
-     private fun showText(text:String){
-        Toast.makeText(context,text,Toast.LENGTH_SHORT).show()
-     }
-
-
     }
+
+    fun changeData(data: ArrayList<RecyclerNotesModel>) {
+        if (data.size > allData.size) {
+            allData = data
+            notifyItemInserted(allData.size)
+        }
+    }
+
+    private fun showText(text: String) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    }
+
+
+}
 
 
