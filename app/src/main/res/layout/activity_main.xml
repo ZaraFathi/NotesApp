@@ -34,7 +34,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rectangles_notes"
+        android:id="@+id/recycler_notes"
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:listitem="@layout/list_item_notes"

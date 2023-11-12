@@ -25,10 +25,23 @@ class NotesDao(
 
 
     }
-    fun editNotes(id:Int,state:String) :Boolean {
-        val database = db.writableDatabase
+    fun editNotes(id: Int,state:String):Boolean {
+        val database=db .writableDatabase
         contentValues.clear()
-        contentValues.put(DBHelper.NOTES_DELETE_STATE,state)
+        contentValues.put(DBHelper.NOTES_DELETE_STATE, state)
+        val result = database.update(
+            DBHelper.NOTES_TABLE,
+            contentValues,
+            "${DBHelper.NOTES_ID}=?",
+            arrayOf(id.toString())
+        )
+        database.close()
+        return result >0
+    }
+
+    fun editNotes(id:Int,notes: DBNotesModel) :Boolean {
+        val database = db.writableDatabase
+        setContentValues(notes)
         val result =database.update(
             DBHelper.NOTES_TABLE,
             contentValues,
@@ -39,9 +52,7 @@ class NotesDao(
 
         return result > 0
     }
-    fun editNotes(id:Int,notes: DBNotesModel) :Boolean {
-        return false
-    }
+
     private fun setContentValues(notes: DBNotesModel) {
         contentValues.clear()
         contentValues.put(DBHelper.NOTES_TITLE, notes.title)
@@ -90,7 +101,6 @@ class NotesDao(
         database.close()
         return data
     }
-
     private fun getData(): DBNotesModel {
         val data =DBNotesModel(0,"","","","",)
         try{
@@ -106,7 +116,19 @@ class NotesDao(
         }
         return data
     }
-        private fun getIndex(name:String)=cursor.getColumnIndex(name)
+    private fun getIndex(name:String)=cursor.getColumnIndex(name)
+
+    fun deleteNotes(id: Int):Boolean {
+        val database=db .writableDatabase
+
+        val result = database.delete(
+            DBHelper.NOTES_TABLE,
+            "${DBHelper.NOTES_ID}=?",
+            arrayOf(id.toString())
+        )
+        database.close()
+        return result >0
+    }
 }
 
 

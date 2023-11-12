@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dao: NotesDao
     private lateinit var adapter: NotesAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +27,11 @@ class MainActivity : AppCompatActivity() {
             intent .putExtra("nowNotes",true)
             startActivity(intent)
         }
+        binding.txtRecycleBin.setOnClickListener {
+            val intent=Intent(this,RecycleBinActivity::class.java)
+            startActivity(intent)
+        }
+
     }
     override fun onStart() {
         super.onStart()
@@ -38,11 +42,9 @@ class MainActivity : AppCompatActivity() {
 
   private fun initRecycler(){
       dao =NotesDao(DBHelper(this))
-      val data =dao.getNotesForRecycler(DBHelper.FALSE_STATE)
-      adapter= NotesAdapter( this,data,dao)
-
-      binding.rectanglesNotes.layoutManager =
-        LinearLayoutManager( this,RecyclerView.VERTICAL, false)
-      binding.rectanglesNotes.adapter =adapter
+      adapter= NotesAdapter( this,dao)
+      binding.recyclerNotes.layoutManager =
+          LinearLayoutManager( this,RecyclerView.VERTICAL, false)
+      binding.recyclerNotes.adapter =adapter
   }
 }
