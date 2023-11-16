@@ -81,7 +81,6 @@ class  RecycleBinAdapter (
                         } else
                             showText("عملیات با مشکل مواجه شد")
                     }
-                    .setPositiveButton("خیر") { _,_ ->}
                     .create()
                     .show()
             }

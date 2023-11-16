@@ -74,6 +74,7 @@ class NotesAdapter(
         notifyDataSetChanged()
     }
     private fun showText(text: String) {
+
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 }
